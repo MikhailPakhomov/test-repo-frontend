@@ -19,13 +19,13 @@ module.exports = {
         lift: {
           '0%': {
             transform: 'translateY(30%)',
-            opacity: '0.7'
+            opacity: '0.7',
           },
           '100%': {
             transform: 'translateY(0)',
-            opacity: '1'
-          }
-        }
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'typing-fast': 'typing 1s steps(3, end) infinite',
@@ -33,6 +33,7 @@ module.exports = {
       },
       colors: {
         primary: '#11253E',
+        gray: '8695A7'
       },
     },
   },
@@ -42,10 +43,9 @@ module.exports = {
       {
         winter: {
           ...require('daisyui/src/theming/themes')['[data-theme=winter]'],
-          'primary': '#11253E',
+          primary: '#11253E',
         },
       },
     ],
   },
-
 };
