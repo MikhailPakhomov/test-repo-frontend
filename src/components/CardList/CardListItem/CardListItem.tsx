@@ -11,11 +11,7 @@ const CardListItem = (props: any) => {
 
   const mutationUserPhone = createMutation({
     mutationFn: patchUserPhone,
-    onSuccess: (_, { id }) => {
-      console.log("Данные успешно обновлены!");
-      handleEdit();
-      // queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
+
     onError: (error) => {
       console.error("Ошибка при обновлении:", error);
     },
@@ -25,19 +21,28 @@ const CardListItem = (props: any) => {
 
   const handleEdit = () => {
     setIsEdit(!isEdit());
-    inputRef.focus();
+
+    inputRef?.focus();
   };
 
   const handleChange = (event: Event) => {
-    console.log(event.target.value);
+    console.log(event?.target?.value);
     setInputValue(event?.target?.value);
   };
 
-  const handleSaveNumber = (num: string, id) => {
-    setPhone(num);
+  const handleSaveNumber = (num: string, id: number) => {
+    mutationUserPhone.mutate(
+      { id: id, phone: num },
+      {
+        onSuccess: () => {
+          setIsEdit(false);
+          setPhone(num);
+        },
+      }
+    );
     queryClient.setQueryData(["users"], (oldUsers) => {
       return oldUsers.map((user) => {
-        return user.id === id ? { ...user, phone: phone() } : user;
+        return user.id === id ? { ...user, phone: num } : user;
       });
     });
   };
@@ -122,7 +127,7 @@ const CardListItem = (props: any) => {
           <button
             onclick={() => {
               handleSaveNumber(inputValue(), props.id);
-              mutationUserPhone.mutate({ id: props.id, phone: phone() });
+              // mutationUserPhone.mutate({ id: props.id, phone: phone() });
             }}
             class="flex justify-center items-center gap-[6px] bg-[#11253E] h-[42px] rounded-md mb-[14px]"
             disabled={mutationUserPhone.isLoading}
