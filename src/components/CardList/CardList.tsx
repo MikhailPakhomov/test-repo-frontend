@@ -1,18 +1,8 @@
 import CardListItem from "./CardListItem/CardListItem";
-import { TCardItem } from "../../types/CardItem";
-import {
-  createEffect,
-  createMemo,
-  createSignal,
-  For,
-  Match,
-  Show,
-  Switch,
-} from "solid-js";
+import { createMemo, createSignal, For, Match, Show, Switch } from "solid-js";
 import { fetchUsers } from "./../../api/apiClient";
 import { createQuery } from "@tanstack/solid-query";
 import Pagination from "../ui/Pagination/Pagination";
-import { queryClient } from "../..";
 
 const CardList = () => {
   const [page, setPage] = createSignal(1);

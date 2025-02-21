@@ -1,6 +1,4 @@
-import { createSignal } from "solid-js";
 import CardList from "./components/CardList/CardList";
-import Pagination from "./components/ui/Pagination/Pagination";
 
 function App() {
   return (

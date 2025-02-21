@@ -1,5 +1,5 @@
-import { createMutation, QueryClient } from "@tanstack/solid-query";
-import { createEffect, createSignal, Show } from "solid-js";
+import { createMutation } from "@tanstack/solid-query";
+import { createSignal, Show } from "solid-js";
 import { patchUserPhone } from "../../../api/apiClient";
 import { queryClient } from "./../../../index";
 
@@ -16,15 +16,16 @@ const CardListItem = (props: any) => {
     },
   });
 
-  let inputRef;
+  let inputRef: HTMLInputElement | undefined;
 
-  const handleEdit = (value) => {
+  const handleEdit = (value: boolean) => {
     setIsEdit(value);
     inputRef?.focus();
   };
 
   const handleChange = (event: Event) => {
-    setInputValue(event?.target?.value);
+    const target = event.target as HTMLInputElement;
+    setInputValue(target?.value);
   };
 
   const handleSaveNumber = async (num: string, id: number) => {
@@ -37,8 +38,8 @@ const CardListItem = (props: any) => {
         },
       }
     );
-    queryClient.setQueryData(["users"], (oldUsers) => {
-      return oldUsers.map((user) => {
+    queryClient.setQueryData(["users"], (oldUsers: any) => {
+      return oldUsers.map((user: any) => {
         if (user.id === id) {
           setPhone(num);
           return { ...user, phone: num };

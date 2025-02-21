@@ -1,6 +1,10 @@
-import { For } from "solid-js";
+import { For, Setter } from "solid-js";
 
-const Pagination = (props) => {
+const Pagination = (props: {
+  pages: number[];
+  currentPage: number;
+  setPage: Setter<number>;
+}) => {
   return (
     <div class="join lg:order-2">
       <For each={props.pages}>
