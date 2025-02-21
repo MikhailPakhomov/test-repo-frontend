@@ -48,10 +48,6 @@ const CardListItem = (props: any) => {
     });
   };
 
-  createEffect(() => {
-    console.log(isEdit(), "изменился");
-  });
-  debugger;
   return (
     <div class="flex flex-col max-w-[330px] min-h-[312px] p-[20px] bg-white rounded-xl">
       <svg

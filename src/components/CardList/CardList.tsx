@@ -42,14 +42,16 @@ const CardList = () => {
   };
 
   return (
-    <div class="mb-4">
+    <div class="grid items-center mb-4">
       <h1 class="mb-4 mt-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 text-center">
         Users
       </h1>
 
       <Switch>
         <Match when={users.isLoading}>
-          <span class="loading loading-dots loading-lg"></span>
+          <div class="flex justify-center items-center">
+            <span class="loading loading-dots loading-lg"></span>
+          </div>
         </Match>
         <Match when={users.isError}>
           <span>Error: {(users.error as Error).message}</span>
