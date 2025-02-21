@@ -1,5 +1,5 @@
 import { createMutation, QueryClient } from "@tanstack/solid-query";
-import { createSignal, Show } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import { patchUserPhone } from "../../../api/apiClient";
 import { queryClient } from "./../../../index";
 
@@ -7,7 +7,6 @@ const CardListItem = (props: any) => {
   const [isEdit, setIsEdit] = createSignal(false);
   const [inputValue, setInputValue] = createSignal(props.phone);
   const [phone, setPhone] = createSignal(props.phone);
-  const [userId, setUserId] = createSignal(1);
 
   const mutationUserPhone = createMutation({
     mutationFn: patchUserPhone,
@@ -19,19 +18,17 @@ const CardListItem = (props: any) => {
 
   let inputRef;
 
-  const handleEdit = () => {
-    setIsEdit(!isEdit());
-
+  const handleEdit = (value) => {
+    setIsEdit(value);
     inputRef?.focus();
   };
 
   const handleChange = (event: Event) => {
-    console.log(event?.target?.value);
     setInputValue(event?.target?.value);
   };
 
-  const handleSaveNumber = (num: string, id: number) => {
-    mutationUserPhone.mutate(
+  const handleSaveNumber = async (num: string, id: number) => {
+    await mutationUserPhone.mutateAsync(
       { id: id, phone: num },
       {
         onSuccess: () => {
@@ -42,10 +39,19 @@ const CardListItem = (props: any) => {
     );
     queryClient.setQueryData(["users"], (oldUsers) => {
       return oldUsers.map((user) => {
-        return user.id === id ? { ...user, phone: num } : user;
+        if (user.id === id) {
+          setPhone(num);
+          return { ...user, phone: num };
+        }
+        return user;
       });
     });
   };
+
+  createEffect(() => {
+    console.log(isEdit(), "изменился");
+  });
+  debugger;
   return (
     <div class="flex flex-col max-w-[330px] min-h-[312px] p-[20px] bg-white rounded-xl">
       <svg
@@ -139,7 +145,9 @@ const CardListItem = (props: any) => {
         }
       >
         <button
-          onclick={handleEdit}
+          onclick={() => {
+            handleEdit(true);
+          }}
           class="flex justify-center items-center gap-[6px] bg-[#11253E] h-[42px] rounded-md mb-[14px]"
         >
           <svg

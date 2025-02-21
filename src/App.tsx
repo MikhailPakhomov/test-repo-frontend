@@ -4,7 +4,7 @@ import Pagination from "./components/ui/Pagination/Pagination";
 
 function App() {
   return (
-    <div class="container mx-auto min-h-screen flex justify-center items-center p-4">
+    <div class="container mx-auto px-4 min-h-screen flex justify-center items-center">
       <div class="flex flex-col items-center">
         <CardList />
       </div>

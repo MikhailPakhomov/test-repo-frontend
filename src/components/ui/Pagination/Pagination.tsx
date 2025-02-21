@@ -3,7 +3,7 @@ import { For } from "solid-js";
 const Pagination = (props) => {
   console.log(props.pages);
   return (
-    <div class="join">
+    <div class="join lg:order-2">
       <For each={props.pages}>
         {(page) => (
           <button

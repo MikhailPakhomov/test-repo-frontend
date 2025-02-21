@@ -86,7 +86,7 @@ const CardList = () => {
               </div>
             </div>
 
-            <div class="grid grid-cols-4 gap-4">
+            <div class="2xl:grid 2xl:grid-cols-4 2xl:gap-4 2xl:order-2  xl:grid xl:grid-cols-3 xl:gap-4 xl:order-2  lg:grid lg:grid-cols-2 lg:gap-4  grid grid-cols-1 gap-4  order-3">
               <For each={paginatedUsers()}>
                 {(user) => <CardListItem {...user} />}
               </For>
