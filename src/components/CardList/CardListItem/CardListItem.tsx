@@ -1,8 +1,7 @@
 import { createMutation, QueryClient } from "@tanstack/solid-query";
 import { createSignal, Show } from "solid-js";
 import { patchUserPhone } from "../../../api/apiClient";
-
-const queryClient = new QueryClient();
+import { queryClient } from "./../../../index";
 
 const CardListItem = (props: any) => {
   const [isEdit, setIsEdit] = createSignal(false);
@@ -12,10 +11,10 @@ const CardListItem = (props: any) => {
 
   const mutationUserPhone = createMutation({
     mutationFn: patchUserPhone,
-    onSuccess: () => {
+    onSuccess: (_, { id }) => {
       console.log("Данные успешно обновлены!");
       handleEdit();
-      queryClient.invalidateQueries({ queryKey: ["user", userId()] });
+      // queryClient.invalidateQueries({ queryKey: ["users"] });
     },
     onError: (error) => {
       console.error("Ошибка при обновлении:", error);
@@ -34,11 +33,16 @@ const CardListItem = (props: any) => {
     setInputValue(event?.target?.value);
   };
 
-  const handleSaveNumber = (number: string) => {
-    setPhone(number);
+  const handleSaveNumber = (num: string, id) => {
+    setPhone(num);
+    queryClient.setQueryData(["users"], (oldUsers) => {
+      return oldUsers.map((user) => {
+        return user.id === id ? { ...user, phone: phone() } : user;
+      });
+    });
   };
   return (
-    <div class="flex flex-col max-w-[330px] min-h-[312px] p-[20px] bg-white">
+    <div class="flex flex-col max-w-[330px] min-h-[312px] p-[20px] bg-white rounded-xl">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"
@@ -117,8 +121,8 @@ const CardListItem = (props: any) => {
         fallback={
           <button
             onclick={() => {
-              handleSaveNumber(inputValue());
-              mutationUserPhone.mutate({ id: userId(), phone: phone() });
+              handleSaveNumber(inputValue(), props.id);
+              mutationUserPhone.mutate({ id: props.id, phone: phone() });
             }}
             class="flex justify-center items-center gap-[6px] bg-[#11253E] h-[42px] rounded-md mb-[14px]"
             disabled={mutationUserPhone.isLoading}
