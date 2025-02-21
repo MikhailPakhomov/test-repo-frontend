@@ -1,8 +1,4 @@
-import { createQuery } from '@tanstack/solid-query';
-import { For, Show } from 'solid-js';
-
-import CardList from './components/CardList/CardList';
-import { TCardItem } from './types/CardItem';
+import CardList from "./components/CardList/CardList";
 
 function App() {
   return (

@@ -9,3 +9,7 @@ export const fetchUsers = async () => {
   return response.data;
 };
 
+export const patchUserPhone = async (data: { id: number; phone: string }) => {
+  return apiClient.patch(`/users/${data.id}`, { phone: data.phone });
+}
+

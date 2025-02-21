@@ -1,9 +1,26 @@
+import { createMutation, QueryClient } from "@tanstack/solid-query";
 import { createSignal, Show } from "solid-js";
+import { patchUserPhone } from "../../../api/apiClient";
+
+const queryClient = new QueryClient();
 
 const CardListItem = (props: any) => {
   const [isEdit, setIsEdit] = createSignal(false);
   const [inputValue, setInputValue] = createSignal(props.phone);
-  const [number, setNumber] = createSignal(props.phone);
+  const [phone, setPhone] = createSignal(props.phone);
+  const [userId, setUserId] = createSignal(1);
+
+  const mutationUserPhone = createMutation({
+    mutationFn: patchUserPhone,
+    onSuccess: () => {
+      console.log("Данные успешно обновлены!");
+      handleEdit();
+      queryClient.invalidateQueries({ queryKey: ["user", userId()] });
+    },
+    onError: (error) => {
+      console.error("Ошибка при обновлении:", error);
+    },
+  });
 
   let inputRef;
 
@@ -18,7 +35,7 @@ const CardListItem = (props: any) => {
   };
 
   const handleSaveNumber = (number: string) => {
-    setNumber(number);
+    setPhone(number);
   };
   return (
     <div class="flex flex-col max-w-[330px] min-h-[312px] p-[20px] bg-white">
@@ -101,11 +118,14 @@ const CardListItem = (props: any) => {
           <button
             onclick={() => {
               handleSaveNumber(inputValue());
-              handleEdit();
+              mutationUserPhone.mutate({ id: userId(), phone: phone() });
             }}
             class="flex justify-center items-center gap-[6px] bg-[#11253E] h-[42px] rounded-md mb-[14px]"
+            disabled={mutationUserPhone.isLoading}
           >
-            <span class="text-white text-[14px]">Сохранить</span>
+            <span class="text-white text-[14px]">
+              {mutationUserPhone.isLoading ? "Сохранение..." : "Сохранить"}
+            </span>
           </button>
         }
       >
@@ -182,7 +202,7 @@ const CardListItem = (props: any) => {
               ></input>
             }
           >
-            <span>{number()}</span>
+            <span>{phone()}</span>
           </Show>
         </div>
       </div>
