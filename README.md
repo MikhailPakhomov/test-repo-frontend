@@ -1,28 +1,41 @@
-## Usage
+## Тестовое задание в Мой Софт
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+### Выполнено
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+1. Стек: **SolidJS, TypeScript, TanStack, Tailwind**
+2. Верстка по макету из Figma
+3. Получение пользователей с (https://jsonplaceholder.typicode.com/users)
+4. Реализация логики:
+* Изменение текстового поля
+   - Можно изменить номер мобильного телефона, нажав на кнопку *"Редактировать"*
+   - Кнопка изменится на *"Сохранить"*
+   - Станет доступным для редактирование поле с телефонным номером, автоматически поставив туда курсор
+   - После изменения номера, нажав на кнопку *"Сохранить"*, она изменится на *"Сохранение..."*
+   - В этот момент отправляется patch-запрос на сервер
+   - После успешного запроса кнопка снова меняется на *"Редактировать"*
+* Изменение количества отображаемых карточек  - Можно выбрать 4, 8, либо все 10
+* Добавлена динамическая пагинация для вариант 4 карточки или 8 карточек на странице (реализовано полностью на клиенте)
+* Добавлена кнопка *"Обновить"*. Отправляет повторный запрос на сервер
+* Также повторный запрос за новыми данными отправляется раз в 10 минут
+5. Добавлен небольшой адаптив (перестраивается сетка из карточек и меняются местами сетка и пагинация)
 
-## Available Scripts
+## Инструкция по запуску
 
-In the project directory, you can run:
+1. ```git clone https://github.com/MikhailPakhomov/test-repo-frontend```
 
-### `npm run dev`
+2. ```npm install```
+3. ```npm run dev```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+## Деплой
 
-### `npm run build`
+https://test-repo-frontend-lovat.vercel.app/
 
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
+## Скриншоты
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![image](https://github.com/user-attachments/assets/c68e9dc5-6f25-4b92-90f9-9eb7fc487817)
+![image](https://github.com/user-attachments/assets/0f3c2c4d-71a8-4951-b884-652b8a3706fc)
+![image](https://github.com/user-attachments/assets/5b91426c-4c7b-4080-bae7-d5da99f6bf60)
+![image](https://github.com/user-attachments/assets/9920c146-ba5b-4170-a062-e107decb102d)
 
-## Deployment
 
-Learn more about deploying your application with the [documentations](https://vite.dev/guide/static-deploy.html)
+
