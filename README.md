@@ -21,10 +21,15 @@
 
 ## Инструкция по запуску
 
-1. ```git clone https://github.com/MikhailPakhomov/test-repo-frontend```
-
-2. ```npm install```
-3. ```npm run dev```
+```
+git clone https://github.com/MikhailPakhomov/test-repo-frontend
+```
+```
+npm install
+```
+```
+npm run dev
+```
 
 ## Деплой
 
